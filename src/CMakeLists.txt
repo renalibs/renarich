@@ -1,0 +1,14 @@
+add_library(renarich SHARED
+    ${CMAKE_CURRENT_SOURCE_DIR}/builtin/color_tag.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/rprintf.cpp
+)
+target_include_directories(renarich
+    PUBLIC
+        ${RENARICH_INCLUDE_DIR}
+    PRIVATE
+        ${CMAKE_CURRENT_SOURCE_DIR}
+)
+target_compile_definitions(renarich
+    PRIVATE
+        __RENALIBS_EXPORT__
+)

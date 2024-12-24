@@ -10,16 +10,6 @@
 #include<windows.h>
 #endif // RENARICH_USE_ANSI
 
-#ifdef _MSC_VER
-    #ifdef __RENALIBS_EXPORT__
-        #define __RENALIBS_API__ __declspec( dllexport )
-    #else
-        #define __RENALIBS_API__ __declspec( dllimport )
-    #endif //__RENALIBS_EXPORT__
-#else // _MSC_VER
-    #define __RENALIBS_API__
-#endif // _MSC_VER
-
 #define RENARICH_DECLARE_STATIC_CLASS( class )  \
     class() = delete;                           \
     class( const class& ) = delete;             \
@@ -35,6 +25,12 @@ namespace rena {
         unsigned char _u8i_win32;
         unsigned char _u8i_type;
     } _color_code;
+    inline bool operator==( const _color_code& __c__lhs , const _color_code& __c__rhs ){
+        return ( ( __c__lhs._u8i_ansi == __c__rhs._u8i_ansi ) && ( __c__lhs._u8i_win32 == __c__rhs._u8i_win32 ) && ( __c__lhs._u8i_type == __c__rhs._u8i_type ) );
+    }
+    inline bool operator!=( const _color_code& __c__lhs , const _color_code& __c__rhs ){
+        return ( ( __c__lhs._u8i_ansi != __c__rhs._u8i_ansi ) || ( __c__lhs._u8i_win32 != __c__rhs._u8i_win32 ) || ( __c__lhs._u8i_type != __c__rhs._u8i_type ) );
+    }
 
     namespace builtin {
 

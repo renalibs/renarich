@@ -18,4 +18,7 @@ endif()
 
 set(RENARICH_INCLUDE_DIR ${PROJECT_SOURCE_DIR}/include)
 
+if(NOT ${RENARICH_HEADER_ONLY})
+    add_subdirectory(${PROJECT_SOURCE_DIR}/src)
+endif()
 add_subdirectory(${PROJECT_SOURCE_DIR}/example)
