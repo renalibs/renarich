@@ -22,8 +22,7 @@
 
 namespace rena {
 
-    __RENALIBS_API__ int rprintf( const std::string& __c_s_format , ... );
-    __RENALIBS_API__ int rprintf( const std::string& __c_s_format , va_list __va_args );
+    __RENALIBS_API__ int rprintf( const char* __cp_c_format , ... );
 
 } // namespace rena
 

@@ -8,20 +8,16 @@
 
 int _rprintf( const std::string& __c_s_str , std::ostream& __os );
 
-int rena::rprintf( const std::string& __c_s_format , ... ){
+int rena::rprintf( const char* __cp_c_format , ... ){
     va_list args;
-    va_start( args , __c_s_format );
-    int rc = rprintf( __c_s_format , args );
-    va_end( args );
-    return rc;
-}
-
-int rena::rprintf( const std::string& __c_s_format , va_list __va_args ){
+    va_start( args , __cp_c_format );
     char* buf = new char[65536];
-    vsnprintf( buf , 65536 , __c_s_format.c_str() , __va_args );
+    vsnprintf( buf , 65536 , __cp_c_format , args );
     std::string fullstr( buf );
     delete[] buf;
-    return _rprintf( fullstr , std::cout );
+    va_end( args );
+    int rc = _rprintf( fullstr , std::cout );
+    return rc;
 }
 
 int _rprintf( const std::string& __c_s_str , std::ostream& __os ){
