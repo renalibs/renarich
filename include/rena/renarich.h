@@ -1,5 +1,5 @@
-#ifndef __RENALIBS_RENAAPA_H__
-#define __RENALIBS_RENAAPA_H__
+#ifndef __RENALIBS_RENARICH_H__
+#define __RENALIBS_RENARICH_H__
 
 #ifndef _WIN32
 # define RENARICH_USE_ANSI
@@ -205,4 +205,4 @@ namespace rena {
 
 } // namespace rena
 
-#endif // __RENALIBS_RENAAPA_H__
+#endif // __RENALIBS_RENARICH_H__
