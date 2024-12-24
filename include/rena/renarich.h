@@ -12,9 +12,13 @@
     #else
         #define __RENALIBS_API__ __declspec( dllimport )
     #endif //__RENALIBS_EXPORT__
-#else
+#else // _MSC_VER
     #define __RENALIBS_API__
 #endif // _MSC_VER
+
+#ifndef _WIN32
+# define RENARICH_USE_ANSI
+#endif // _WIN32
 
 #define RENARICH_DECLARE_STATIC_CLASS( class )  \
     class() = delete;                           \

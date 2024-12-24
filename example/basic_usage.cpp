@@ -1,7 +1,5 @@
 #include<iostream>
 
-#define RENARICH_USE_ANSI
-
 #include"rena/renarich.h"
 
 int main(){
