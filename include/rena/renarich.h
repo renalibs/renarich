@@ -20,10 +20,14 @@
 
 namespace rena {
 
-    typedef struct {
+    typedef struct color_code {
         unsigned char _u8i_ansi;
         unsigned char _u8i_win32;
         unsigned char _u8i_type;
+        const char* const _s_name;
+        std::string to_string() const {
+            return std::string( this -> _s_name );
+        }
     } color_code;
     inline bool operator==( const color_code& __c__lhs , const color_code& __c__rhs ){
         return ( ( __c__lhs._u8i_ansi == __c__rhs._u8i_ansi ) && ( __c__lhs._u8i_win32 == __c__rhs._u8i_win32 ) && ( __c__lhs._u8i_type == __c__rhs._u8i_type ) );
@@ -122,22 +126,22 @@ namespace rena {
         public:
             RENARICH_DECLARE_STATIC_CLASS( fcolor );
 
-            static constexpr color_code BLACK = { 30 , 0x0000 , builtin::ColorCodeTypeForegroundColor };
-            static constexpr color_code RED = { 31 , 0x0004 , builtin::ColorCodeTypeForegroundColor };
-            static constexpr color_code GREEN = { 32 , 0x0002 , builtin::ColorCodeTypeForegroundColor };
-            static constexpr color_code YELLOW = { 33 , 0x0006 , builtin::ColorCodeTypeForegroundColor };
-            static constexpr color_code BLUE = { 34 , 0x0001 , builtin::ColorCodeTypeForegroundColor };
-            static constexpr color_code MAGENTA = { 35 , 0x0005 , builtin::ColorCodeTypeForegroundColor };
-            static constexpr color_code CYAN = { 36 , 0x0003 , builtin::ColorCodeTypeForegroundColor };
-            static constexpr color_code WHITE = { 37 , 0x0007 , builtin::ColorCodeTypeForegroundColor };
-            static constexpr color_code GRAY = { 90 , 0x0008 , builtin::ColorCodeTypeForegroundColor };
-            static constexpr color_code BRIGHTRED = { 91 , 0x000C , builtin::ColorCodeTypeForegroundColor };
-            static constexpr color_code BRIGHTGREEN = { 92 , 0x000A , builtin::ColorCodeTypeForegroundColor };
-            static constexpr color_code BRIGHTYELLOW = { 93 , 0x000E , builtin::ColorCodeTypeForegroundColor };
-            static constexpr color_code BRIGHTBLUE = { 94 , 0x0009 , builtin::ColorCodeTypeForegroundColor };
-            static constexpr color_code BRIGHTMAGENTA = { 95 , 0x000D , builtin::ColorCodeTypeForegroundColor };
-            static constexpr color_code BRIGHTCYAN = { 96 , 0x000B , builtin::ColorCodeTypeForegroundColor };
-            static constexpr color_code BRIGHTWHITE = { 97 , 0x000F , builtin::ColorCodeTypeForegroundColor };
+            static constexpr color_code BLACK = { 30 , 0x0000 , builtin::ColorCodeTypeForegroundColor , "black" };
+            static constexpr color_code RED = { 31 , 0x0004 , builtin::ColorCodeTypeForegroundColor , "red" };
+            static constexpr color_code GREEN = { 32 , 0x0002 , builtin::ColorCodeTypeForegroundColor , "green" };
+            static constexpr color_code YELLOW = { 33 , 0x0006 , builtin::ColorCodeTypeForegroundColor , "yellow" };
+            static constexpr color_code BLUE = { 34 , 0x0001 , builtin::ColorCodeTypeForegroundColor , "blue" };
+            static constexpr color_code MAGENTA = { 35 , 0x0005 , builtin::ColorCodeTypeForegroundColor , "magenta" };
+            static constexpr color_code CYAN = { 36 , 0x0003 , builtin::ColorCodeTypeForegroundColor , "cyan" };
+            static constexpr color_code WHITE = { 37 , 0x0007 , builtin::ColorCodeTypeForegroundColor , "white" };
+            static constexpr color_code GRAY = { 90 , 0x0008 , builtin::ColorCodeTypeForegroundColor , "gray" };
+            static constexpr color_code BRIGHTRED = { 91 , 0x000C , builtin::ColorCodeTypeForegroundColor , "bright red" };
+            static constexpr color_code BRIGHTGREEN = { 92 , 0x000A , builtin::ColorCodeTypeForegroundColor , "bright green" };
+            static constexpr color_code BRIGHTYELLOW = { 93 , 0x000E , builtin::ColorCodeTypeForegroundColor , "bright yellow" };
+            static constexpr color_code BRIGHTBLUE = { 94 , 0x0009 , builtin::ColorCodeTypeForegroundColor , "bright blue" };
+            static constexpr color_code BRIGHTMAGENTA = { 95 , 0x000D , builtin::ColorCodeTypeForegroundColor , "bright magenta" };
+            static constexpr color_code BRIGHTCYAN = { 96 , 0x000B , builtin::ColorCodeTypeForegroundColor , "bright cyan" };
+            static constexpr color_code BRIGHTWHITE = { 97 , 0x000F , builtin::ColorCodeTypeForegroundColor , "bright white" };
 
     }; // class fcolor
 
@@ -146,22 +150,22 @@ namespace rena {
         public:
             RENARICH_DECLARE_STATIC_CLASS( bcolor );
 
-            static constexpr color_code BLACK = { 40 , 0x0000 , builtin::ColorCodeTypeBackgroundColor };
-            static constexpr color_code RED = { 41 , 0x0040 , builtin::ColorCodeTypeBackgroundColor };
-            static constexpr color_code GREEN = { 42 , 0x0020 , builtin::ColorCodeTypeBackgroundColor };
-            static constexpr color_code YELLOW = { 43 , 0x0060 , builtin::ColorCodeTypeBackgroundColor };
-            static constexpr color_code BLUE = { 44 , 0x0010 , builtin::ColorCodeTypeBackgroundColor };
-            static constexpr color_code MAGENTA = { 45 , 0x0050 , builtin::ColorCodeTypeBackgroundColor };
-            static constexpr color_code CYAN = { 46 , 0x0030 , builtin::ColorCodeTypeBackgroundColor };
-            static constexpr color_code WHITE = { 47 , 0x0070 , builtin::ColorCodeTypeBackgroundColor };
-            static constexpr color_code GRAY = { 100 , 0x0080 , builtin::ColorCodeTypeBackgroundColor };
-            static constexpr color_code BRIGHTRED = { 101 , 0x00C0 , builtin::ColorCodeTypeBackgroundColor };
-            static constexpr color_code BRIGHTGREEN = { 102 , 0x00A0 , builtin::ColorCodeTypeBackgroundColor };
-            static constexpr color_code BRIGHTYELLOW = { 103 , 0x00E0 , builtin::ColorCodeTypeBackgroundColor };
-            static constexpr color_code BRIGHTBLUE = { 104 , 0x0090 , builtin::ColorCodeTypeBackgroundColor };
-            static constexpr color_code BRIGHTMAGENTA = { 105 , 0x00D0 , builtin::ColorCodeTypeBackgroundColor };
-            static constexpr color_code BRIGHTCYAN = { 106 , 0x00B0 , builtin::ColorCodeTypeBackgroundColor };
-            static constexpr color_code BRIGHTWHITE = { 107 , 0x00F0 , builtin::ColorCodeTypeBackgroundColor };
+            static constexpr color_code BLACK = { 40 , 0x0000 , builtin::ColorCodeTypeBackgroundColor , "black" };
+            static constexpr color_code RED = { 41 , 0x0040 , builtin::ColorCodeTypeBackgroundColor , "red" };
+            static constexpr color_code GREEN = { 42 , 0x0020 , builtin::ColorCodeTypeBackgroundColor , "green" };
+            static constexpr color_code YELLOW = { 43 , 0x0060 , builtin::ColorCodeTypeBackgroundColor , "yellow" };
+            static constexpr color_code BLUE = { 44 , 0x0010 , builtin::ColorCodeTypeBackgroundColor , "blue" };
+            static constexpr color_code MAGENTA = { 45 , 0x0050 , builtin::ColorCodeTypeBackgroundColor , "magenta" };
+            static constexpr color_code CYAN = { 46 , 0x0030 , builtin::ColorCodeTypeBackgroundColor , "cyan" };
+            static constexpr color_code WHITE = { 47 , 0x0070 , builtin::ColorCodeTypeBackgroundColor , "white" };
+            static constexpr color_code GRAY = { 100 , 0x0080 , builtin::ColorCodeTypeBackgroundColor , "gray" };
+            static constexpr color_code BRIGHTRED = { 101 , 0x00C0 , builtin::ColorCodeTypeBackgroundColor , "bright red" };
+            static constexpr color_code BRIGHTGREEN = { 102 , 0x00A0 , builtin::ColorCodeTypeBackgroundColor , "bright green" };
+            static constexpr color_code BRIGHTYELLOW = { 103 , 0x00E0 , builtin::ColorCodeTypeBackgroundColor , "bright yellow" };
+            static constexpr color_code BRIGHTBLUE = { 104 , 0x0090 , builtin::ColorCodeTypeBackgroundColor , "bright blue" };
+            static constexpr color_code BRIGHTMAGENTA = { 105 , 0x00D0 , builtin::ColorCodeTypeBackgroundColor , "bright magenta" };
+            static constexpr color_code BRIGHTCYAN = { 106 , 0x00B0 , builtin::ColorCodeTypeBackgroundColor , "bright cyan" };
+            static constexpr color_code BRIGHTWHITE = { 107 , 0x00F0 , builtin::ColorCodeTypeBackgroundColor , "bright white" };
 
     }; // class bcolor
 
@@ -172,26 +176,26 @@ namespace rena {
         public:
             RENARICH_DECLARE_STATIC_CLASS( fstyle );
 
-            static constexpr color_code BOLD = { 1 , 0x00FF , builtin::ColorCodeTypeStyle };
-            static constexpr color_code DIM = { 2 , 0x00FF , builtin::ColorCodeTypeStyle };
-            static constexpr color_code ITALIC = { 3 , 0x00FF , builtin::ColorCodeTypeStyle };
-            static constexpr color_code UNDERLINE = { 4 , 0x00FF , builtin::ColorCodeTypeStyle };
-            static constexpr color_code OVERLINE = { 53 , 0x00FF , builtin::ColorCodeTypeStyle };
-            static constexpr color_code STRIKE = { 9 , 0x00FF , builtin::ColorCodeTypeStyle };
-            static constexpr color_code REVERSE = { 7 , 0x00FF , builtin::ColorCodeTypeStyle };
+            static constexpr color_code BOLD = { 1 , 0x00FF , builtin::ColorCodeTypeStyle , "bold" };
+            static constexpr color_code DIM = { 2 , 0x00FF , builtin::ColorCodeTypeStyle , "dim" };
+            static constexpr color_code ITALIC = { 3 , 0x00FF , builtin::ColorCodeTypeStyle , "italic" };
+            static constexpr color_code UNDERLINE = { 4 , 0x00FF , builtin::ColorCodeTypeStyle , "underline" };
+            static constexpr color_code OVERLINE = { 53 , 0x00FF , builtin::ColorCodeTypeStyle , "overline" };
+            static constexpr color_code STRIKE = { 9 , 0x00FF , builtin::ColorCodeTypeStyle , "strike" };
+            static constexpr color_code REVERSE = { 7 , 0x00FF , builtin::ColorCodeTypeStyle , "reverse" };
 
     }; // class fstyle
 
 #endif // RENARICH_USE_ANSI
 
     template<class _Elem , class _Traits>
-    std::basic_ostream<_Elem,_Traits>& operator<<( std::basic_ostream<_Elem,_Traits>& __os , const color_code& __c__code ){
+    std::basic_ostream<_Elem,_Traits>& operator<<( std::basic_ostream<_Elem,_Traits>& __os , const color_code& __c_cc_code ){
 #ifdef RENARICH_USE_ANSI
-        __os << "\033[" << static_cast<int>( __c__code._u8i_ansi ) << "m";
+        __os << "\033[" << static_cast<int>( __c_cc_code._u8i_ansi ) << "m";
 #else // RENARICH_USE_ANSI
-        switch ( __c__code._u8i_type ) {
-            case builtin::ColorCodeTypeForegroundColor: builtin::win32_cs_helper::set_color( __c__code._u8i_win32 , builtin::win32_cs_helper::KeepColor ); break;
-            case builtin::ColorCodeTypeBackgroundColor: builtin::win32_cs_helper::set_color( builtin::win32_cs_helper::KeepColor , __c__code._u8i_win32 ); break;
+        switch ( __c_cc_code._u8i_type ) {
+            case builtin::ColorCodeTypeForegroundColor: builtin::win32_cs_helper::set_color( __c_cc_code._u8i_win32 , builtin::win32_cs_helper::KeepColor ); break;
+            case builtin::ColorCodeTypeBackgroundColor: builtin::win32_cs_helper::set_color( builtin::win32_cs_helper::KeepColor , __c_cc_code._u8i_win32 ); break;
             default: break;
         }
 #endif // RENARICH_USE_ANSI
