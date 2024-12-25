@@ -15,14 +15,10 @@
     #define __RENALIBS_API__
 #endif // _MSC_VER
 
-#include<cstdarg>
-#include<string>
-
-#include"rena/renarich.h"
-
 namespace rena {
 
     __RENALIBS_API__ int rprintf( const char* __cp_c_format , ... );
+    __RENALIBS_API__ int wrprintf( const wchar_t* __cp_wc_format , ... );
 
 } // namespace rena
 
