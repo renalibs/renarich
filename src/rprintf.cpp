@@ -34,32 +34,58 @@ int _rprintf( const std::string& __c_s_str , std::ostream& __os ){
         std::size_t epos = bpos + match.length();
         if ( bpos == 0 || ( bpos > 0 && __c_s_str[bpos-1] != '\\' ) )
         {
-            std::string tag = match[1].str();
-            rena::_color_code code = rena::builtin::parse_color_tag( tag );
-            if ( code == rena::builtin::PopColorTag )
+            std::string tag_str = match[1].str();
+            std::stringstream ss( tag_str );
+            std::vector<std::string> tags;
+            std::string this_tag;
+            while ( std::getline( ss , this_tag , ',' ) )
             {
-                code_stack.pop();
-                __os << __c_s_str.substr( lpos , bpos - lpos ) << rena::rich_reset;
-                if ( !code_stack.empty() )
+                if ( !rena::builtin::is_legal_color_tag( this_tag ) )
                 {
-                    std::stack<rena::_color_code> temp_stack( code_stack );
+                    goto next_iterator;
+                } // illegal color tag, break
+                tags.push_back( this_tag );
+            }
+            __os << __c_s_str.substr( lpos , bpos - lpos );
+            for ( const auto& tag : tags )
+            {
+                rena::_color_code code = rena::builtin::parse_color_tag( tag );
+                if ( code == rena::builtin::PopColorTag )
+                {
+                    __os << rena::rich_reset;
+                    code_stack.pop();
+                    if ( !code_stack.empty() )
+                    {
+                        std::stack<rena::_color_code> temp_stack( code_stack );
+                        while ( !code_stack.empty() )
+                        {
+                            __os << code_stack.top();
+                            code_stack.pop();
+                        }
+                        code_stack = temp_stack;
+                    } // code stack not empty, revert remaining color codes
+                } // pop tag
+                else if ( code == rena::builtin::PopAllColorTag )
+                {
+                    __os << rena::rich_reset;
                     while ( !code_stack.empty() )
                     {
-                        __os << code_stack.top();
                         code_stack.pop();
-                    }
-                    code_stack = temp_stack;
-                } // code stack not empty, revert remaining color codes
+                    } // pop all codes
+                } // pop all tag
+                else if ( code != rena::builtin::IllegalColorTag )
+                {
+                    __os << code;
+                    code_stack.push( code );
+                } // color tag
+                else
+                {
+                    goto next_iterator;
+                } // illegal tag, should never approach here
                 lpos = epos;
-            } // pop tag
-            else if ( code != rena::builtin::IllegalColorTag )
-            {
-                __os << __c_s_str.substr( lpos , bpos - lpos ) << code;
-                code_stack.push( code );
-                lpos = epos;
-            } // color tag
-            else {} // illegal tag
+            }
         }
+next_iterator:
         ++rit;
     }
     if ( lpos < __c_s_str.size() )

@@ -7,10 +7,12 @@
 
 namespace rena::builtin {
 
+    bool is_legal_color_tag( const std::string& __c_s_tag );
     _color_code parse_color_tag( const std::string& __c_s_tag );
 
-    constexpr _color_code PopColorTag = { 0x7f , 0x7f , 0x7f };
-    constexpr _color_code IllegalColorTag = { 0xff , 0xff , 0xff };
+    constexpr _color_code PopColorTag = { 0x7F , 0x7F , 0x7F };
+    constexpr _color_code PopAllColorTag = { 0x8F , 0x8F , 0x8F };
+    constexpr _color_code IllegalColorTag = { 0xFF , 0xFF , 0xFF };
 
 } // namespace rena::builtin
 

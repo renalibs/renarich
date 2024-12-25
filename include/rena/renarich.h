@@ -165,6 +165,25 @@ namespace rena {
 
     }; // class bcolor
 
+#ifdef RENARICH_USE_ANSI
+
+    class fstyle {
+
+        public:
+            RENARICH_DECLARE_STATIC_CLASS( fstyle );
+
+            static constexpr _color_code BOLD = { 1 , 0x00FF , builtin::ColorCodeTypeStyle };
+            static constexpr _color_code DIM = { 2 , 0x00FF , builtin::ColorCodeTypeStyle };
+            static constexpr _color_code ITALIC = { 3 , 0x00FF , builtin::ColorCodeTypeStyle };
+            static constexpr _color_code UNDERLINE = { 4 , 0x00FF , builtin::ColorCodeTypeStyle };
+            static constexpr _color_code OVERLINE = { 53 , 0x00FF , builtin::ColorCodeTypeStyle };
+            static constexpr _color_code STRIKE = { 9 , 0x00FF , builtin::ColorCodeTypeStyle };
+            static constexpr _color_code REVERSE = { 7 , 0x00FF , builtin::ColorCodeTypeStyle };
+
+    }; // class fstyle
+
+#endif // RENARICH_USE_ANSI
+
     template <class _Elem , class _Traits>
     std::basic_ostream<_Elem,_Traits>& operator<<( std::basic_ostream<_Elem,_Traits>& __os , const _color_code& __c__code ){
 #ifdef RENARICH_USE_ANSI
