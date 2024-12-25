@@ -42,7 +42,7 @@ int _rprintf( const std::string& __c_s_str , std::ostream& __os ){
     std::sregex_iterator rend;
 
     std::size_t lpos = 0;
-    std::stack<rena::_color_code> code_stack;
+    std::stack<rena::color_code> code_stack;
     while ( rit != rend )
     {
         std::smatch match = *rit;
@@ -65,14 +65,14 @@ int _rprintf( const std::string& __c_s_str , std::ostream& __os ){
             __os << __c_s_str.substr( lpos , bpos - lpos );
             for ( const auto& tag : tags )
             {
-                rena::_color_code code = rena::builtin::parse_color_tag( tag );
+                rena::color_code code = rena::builtin::parse_color_tag( tag );
                 if ( code == rena::builtin::PopColorTag )
                 {
                     __os << rena::rich_reset;
                     if ( !code_stack.empty() )
                     {
                         code_stack.pop();
-                        std::stack<rena::_color_code> temp_stack( code_stack );
+                        std::stack<rena::color_code> temp_stack( code_stack );
                         while ( !code_stack.empty() )
                         {
                             __os << code_stack.top();
@@ -118,7 +118,7 @@ int _wrprintf( const std::wstring& __c_ws_str , std::wostream& __wos ){
     std::wsregex_iterator rend;
 
     std::size_t lpos = 0;
-    std::stack<rena::_color_code> code_stack;
+    std::stack<rena::color_code> code_stack;
     while ( rit != rend )
     {
         std::wsmatch match = *rit;
@@ -142,14 +142,14 @@ int _wrprintf( const std::wstring& __c_ws_str , std::wostream& __wos ){
             __wos << __c_ws_str.substr( lpos , bpos - lpos );
             for ( const auto& tag : tags )
             {
-                rena::_color_code code = rena::builtin::parse_color_tag( tag );
+                rena::color_code code = rena::builtin::parse_color_tag( tag );
                 if ( code == rena::builtin::PopColorTag )
                 {
                     __wos << rena::rich_reset;
                     if ( !code_stack.empty() )
                     {
                         code_stack.pop();
-                        std::stack<rena::_color_code> temp_stack( code_stack );
+                        std::stack<rena::color_code> temp_stack( code_stack );
                         while ( !code_stack.empty() )
                         {
                             __wos << code_stack.top();

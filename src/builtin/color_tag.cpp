@@ -53,7 +53,7 @@ bool rena::builtin::is_legal_color_tag( const std::string& __c_s_tag ){
     return ( legal_color_tag_set.find( __c_s_tag ) != legal_color_tag_set.end() );
 }
 
-rena::_color_code rena::builtin::parse_color_tag( const std::string& __c_s_tag ){
+rena::color_code rena::builtin::parse_color_tag( const std::string& __c_s_tag ){
     std::string tag = __c_s_tag;
     std::transform( tag.begin() , tag.end() , tag.begin() , []( unsigned char __u8i_c ){
         return std::tolower( __u8i_c );
