@@ -5,6 +5,7 @@
 #include<cstdarg>
 #include<iostream>
 #include<regex>
+#include<sstream>
 #include<stack>
 #include<string>
 
@@ -68,9 +69,9 @@ int _rprintf( const std::string& __c_s_str , std::ostream& __os ){
                 if ( code == rena::builtin::PopColorTag )
                 {
                     __os << rena::rich_reset;
-                    code_stack.pop();
                     if ( !code_stack.empty() )
                     {
+                        code_stack.pop();
                         std::stack<rena::_color_code> temp_stack( code_stack );
                         while ( !code_stack.empty() )
                         {
@@ -125,11 +126,11 @@ int _wrprintf( const std::wstring& __c_ws_str , std::wostream& __wos ){
         std::size_t epos = bpos + match.length();
         if ( bpos == 0 || ( bpos > 0 && __c_ws_str[bpos-1] != '\\' ) )
         {
-            std::wstring tag_str = match[1].str();
+            std::wstring tag_wstr = match[1].str();
             std::wstring wtempstr;
-            std::wstringstream ss( tag_str );
+            std::wstringstream wss( tag_wstr );
             std::vector<std::string> tags;
-            while ( std::getline( ss , wtempstr , L',' ) )
+            while ( std::getline( wss , wtempstr , L',' ) )
             {
                 std::string this_tag = std::wstring_convert<std::codecvt_utf8<wchar_t>>().to_bytes( wtempstr );
                 if ( !rena::builtin::is_legal_color_tag( this_tag ) )
@@ -145,9 +146,9 @@ int _wrprintf( const std::wstring& __c_ws_str , std::wostream& __wos ){
                 if ( code == rena::builtin::PopColorTag )
                 {
                     __wos << rena::rich_reset;
-                    code_stack.pop();
                     if ( !code_stack.empty() )
                     {
+                        code_stack.pop();
                         std::stack<rena::_color_code> temp_stack( code_stack );
                         while ( !code_stack.empty() )
                         {

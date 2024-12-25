@@ -11,4 +11,10 @@ target_include_directories(renarich
 target_compile_definitions(renarich
     PRIVATE
         __RENALIBS_EXPORT__
+        $<$<PLATFORM_ID:Windows>:UNICODE>
+        $<$<PLATFORM_ID:Windows>:_UNICODE>
+)
+target_compile_options(renarich
+    PRIVATE
+        $<$<CXX_COMPILER_ID:MSVC>:/utf-8>
 )
