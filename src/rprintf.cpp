@@ -1,9 +1,9 @@
 #include"rena/renarichxx.h"
-#include"rena/renarich.h"
 
 #include<codecvt>
 #include<cstdarg>
 #include<iostream>
+#include<locale>
 #include<regex>
 #include<sstream>
 #include<stack>

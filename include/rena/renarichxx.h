@@ -15,7 +15,22 @@
     #define __RENALIBS_API__
 #endif // _MSC_VER
 
+#include"rena/renarich.h"
+
 namespace rena {
+
+    class renarichxx_cfg {
+
+        public:
+            RENARICH_DECLARE_STATIC_CLASS( renarichxx_cfg );
+
+            __RENALIBS_API__ static bool use_cjk_char_spacing();
+            __RENALIBS_API__ static void use_cjk_char_spacing( bool __b_enable );
+
+        private:
+            static bool _b_use_cjk_char_spacing;
+
+    }; // class renarichxx_cfg
 
     __RENALIBS_API__ int rprintf( const char* __cp_c_format , ... );
     __RENALIBS_API__ int wrprintf( const wchar_t* __cp_wc_format , ... );
