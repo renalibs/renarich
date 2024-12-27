@@ -66,30 +66,34 @@ namespace rena {
             basic_panel( const std::basic_string<_CharT>& __c_s_content )
                 : basic_rcc<_CharT>() , _s_content( __c_s_content ) {}
 
+            static constexpr int s_title = 0x0001;
+            static constexpr int s_no_title = 0x0002;
+            static constexpr int s_subtitle = 0x0010;
+            static constexpr int s_no_subtitle = 0x0020;
+            static constexpr int s_frame_single_line = 0x0100;
+            static constexpr int s_frame_double_line = 0x0200;
+            static constexpr int s_frame_rounded = 0x0400;
+            static constexpr int s_frame_heavy_single_line = 0x0800;
+            static constexpr int s_default = s_title | s_subtitle | s_frame_single_line;
+
             std::basic_string<_CharT> content() const noexcept;
             void content( const std::basic_string<_CharT>& __c_s_content );
             color_code frame_color() const noexcept;
             void frame_color( const color_code& __c_cc_code );
+            int style() const noexcept;
+            void style( int __i_style );
 
         protected:
             virtual void _render( std::basic_ostream<_CharT>& __os ) const override;
             virtual int _get_content_width() const = 0;
             virtual int _get_content_width( const std::basic_string<_CharT>& __c_s_content ) const = 0;
 
-            typedef enum _fc {
-                tlc , // top left corner
-                trc , // top right corner
-                blc , // bottom left corner
-                brc , // bottom right corner
-                tbl , // top bottom line
-                lrv   // left right vline
-            } _fc; // frame chars
-
             virtual _CharT _get_space_char() const noexcept = 0;
-            virtual std::basic_string<_CharT> _get_frame_char( _fc __c ) const = 0;
+            virtual const std::basic_string<_CharT>& _get_frame_char( int __i_c ) const = 0;
 
             std::basic_string<_CharT> _s_content;
             color_code _cc_frame_color = fcolor::WHITE;
+            int _i_style = s_default;
 
     }; // class basic_panel
 
@@ -105,7 +109,7 @@ namespace rena {
             int _get_content_width( const std::string& __c_s_content ) const override;
 
             char _get_space_char() const noexcept override;
-            std::string _get_frame_char( _fc __c ) const override;
+            const std::string& _get_frame_char( int __i_c ) const override;
 
     }; // class panel
 
