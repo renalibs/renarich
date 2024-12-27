@@ -1,0 +1,8 @@
+#ifndef __RENALIBS_RENARICH_ERRCODES_H__
+#define __RENALIBS_RENARICH_ERRCODES_H__
+
+#define RENA_ERR_ILLEGAL_COLOR_CODE             0x000001
+
+#define RENA_ERR_UNEXPECTED                     0xFFFFFF
+
+#endif // __RENALIBS_RENARICH_ERRCODES_H__
