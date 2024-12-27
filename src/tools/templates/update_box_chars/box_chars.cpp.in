@@ -9,3 +9,5 @@
 #include"box_chars.h"
 
 @INSERT_BC_DEFS@
+
+@INSERT_BC_W_DEFS@
