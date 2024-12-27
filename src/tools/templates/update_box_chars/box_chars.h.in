@@ -15,8 +15,8 @@
 #define BC_V   1  // VERTICAL
 #define BC_DR  2  // DOWN AND RIGHT (Top Left Corner)
 #define BC_DL  3  // DOWN AND LEFT (Top Right Corner)
-#define BC_UR  4  // UNDER AND RIGHT (Bottom Left Corner)
-#define BC_UL  5  // UNDER AND LEFT (Bottom Right Corner)
+#define BC_UR  4  // UP AND RIGHT (Bottom Left Corner)
+#define BC_UL  5  // UP AND LEFT (Bottom Right Corner)
 #define BC_VR  6  // VERTICAL AND RIGHT
 #define BC_VL  7  // VERTICAL AND LEFT
 #define BC_DH  8  // DOWN AND HORIZONTAL
