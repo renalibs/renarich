@@ -11,96 +11,28 @@
 
 #include<string>
 
+#define BC_H   0  // HORIZONTAL
+#define BC_V   1  // VERTICAL
+#define BC_DR  2  // DOWN AND RIGHT (Top Left Corner)
+#define BC_DL  3  // DOWN AND LEFT (Top Right Corner)
+#define BC_UR  4  // UNDER AND RIGHT (Bottom Left Corner)
+#define BC_UL  5  // UNDER AND LEFT (Bottom Right Corner)
+#define BC_VR  6  // VERTICAL AND RIGHT
+#define BC_VL  7  // VERTICAL AND LEFT
+#define BC_DH  8  // DOWN AND HORIZONTAL
+#define BC_UH  9  // UNDER AND HORIZONTAL
+#define BC_VH 10  // VERTICAL AND HORIZONTAL
+
+#define BC_G_SLL 0
+#define BC_G_SLH 1
+#define BC_G_DLL 2
+#define BC_G_RLL 3
+
 namespace rena::builtin {
 
-    extern const std::string bc_sll_h;
-    extern const std::wstring bc_sll_h_w;
-    extern const std::string bc_sll_v;
-    extern const std::wstring bc_sll_v_w;
-    extern const std::string bc_sll_dr;
-    extern const std::wstring bc_sll_dr_w;
-    extern const std::string bc_sll_dl;
-    extern const std::wstring bc_sll_dl_w;
-    extern const std::string bc_sll_ur;
-    extern const std::wstring bc_sll_ur_w;
-    extern const std::string bc_sll_ul;
-    extern const std::wstring bc_sll_ul_w;
-    extern const std::string bc_sll_vr;
-    extern const std::wstring bc_sll_vr_w;
-    extern const std::string bc_sll_vl;
-    extern const std::wstring bc_sll_vl_w;
-    extern const std::string bc_sll_dh;
-    extern const std::wstring bc_sll_dh_w;
-    extern const std::string bc_sll_uh;
-    extern const std::wstring bc_sll_uh_w;
-    extern const std::string bc_sll_vh;
-    extern const std::wstring bc_sll_vh_w;
-    extern const std::string bc_slh_h;
-    extern const std::wstring bc_slh_h_w;
-    extern const std::string bc_slh_v;
-    extern const std::wstring bc_slh_v_w;
-    extern const std::string bc_slh_dr;
-    extern const std::wstring bc_slh_dr_w;
-    extern const std::string bc_slh_dl;
-    extern const std::wstring bc_slh_dl_w;
-    extern const std::string bc_slh_ur;
-    extern const std::wstring bc_slh_ur_w;
-    extern const std::string bc_slh_ul;
-    extern const std::wstring bc_slh_ul_w;
-    extern const std::string bc_slh_vr;
-    extern const std::wstring bc_slh_vr_w;
-    extern const std::string bc_slh_vl;
-    extern const std::wstring bc_slh_vl_w;
-    extern const std::string bc_slh_dh;
-    extern const std::wstring bc_slh_dh_w;
-    extern const std::string bc_slh_uh;
-    extern const std::wstring bc_slh_uh_w;
-    extern const std::string bc_slh_vh;
-    extern const std::wstring bc_slh_vh_w;
-    extern const std::string bc_dll_h;
-    extern const std::wstring bc_dll_h_w;
-    extern const std::string bc_dll_v;
-    extern const std::wstring bc_dll_v_w;
-    extern const std::string bc_dll_dr;
-    extern const std::wstring bc_dll_dr_w;
-    extern const std::string bc_dll_dl;
-    extern const std::wstring bc_dll_dl_w;
-    extern const std::string bc_dll_ur;
-    extern const std::wstring bc_dll_ur_w;
-    extern const std::string bc_dll_ul;
-    extern const std::wstring bc_dll_ul_w;
-    extern const std::string bc_dll_vr;
-    extern const std::wstring bc_dll_vr_w;
-    extern const std::string bc_dll_vl;
-    extern const std::wstring bc_dll_vl_w;
-    extern const std::string bc_dll_dh;
-    extern const std::wstring bc_dll_dh_w;
-    extern const std::string bc_dll_uh;
-    extern const std::wstring bc_dll_uh_w;
-    extern const std::string bc_dll_vh;
-    extern const std::wstring bc_dll_vh_w;
-    extern const std::string bc_rll_h;
-    extern const std::wstring bc_rll_h_w;
-    extern const std::string bc_rll_v;
-    extern const std::wstring bc_rll_v_w;
-    extern const std::string bc_rll_dr;
-    extern const std::wstring bc_rll_dr_w;
-    extern const std::string bc_rll_dl;
-    extern const std::wstring bc_rll_dl_w;
-    extern const std::string bc_rll_ur;
-    extern const std::wstring bc_rll_ur_w;
-    extern const std::string bc_rll_ul;
-    extern const std::wstring bc_rll_ul_w;
-    extern const std::string bc_rll_vr;
-    extern const std::wstring bc_rll_vr_w;
-    extern const std::string bc_rll_vl;
-    extern const std::wstring bc_rll_vl_w;
-    extern const std::string bc_rll_dh;
-    extern const std::wstring bc_rll_dh_w;
-    extern const std::string bc_rll_uh;
-    extern const std::wstring bc_rll_uh_w;
-    extern const std::string bc_rll_vh;
-    extern const std::wstring bc_rll_vh_w;
+    extern const std::string bc_table[4][11];
+
+    extern const std::wstring bc_w_table[4][11];
 
 } // namespace rena::builtin
 
