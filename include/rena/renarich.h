@@ -2,7 +2,7 @@
 #define __RENALIBS_RENARICH_H__
 
 #ifndef _WIN32
-# define RENARICH_USE_ANSI
+#define RENARICH_USE_ANSI
 #endif // _WIN32
 
 #include<ostream>
@@ -24,7 +24,7 @@ namespace rena {
         unsigned char _u8i_ansi;
         unsigned char _u8i_win32;
         unsigned char _u8i_type;
-        const char* const _s_name;
+        const char* _s_name;
         std::string to_string() const {
             return std::string( this -> _s_name );
         }

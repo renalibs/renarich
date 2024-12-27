@@ -1,6 +1,8 @@
 add_library(renarich SHARED
     ${CMAKE_CURRENT_SOURCE_DIR}/builtin/color_tag.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/builtin/terminal_helper.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/builtin/wcwidth.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/panel.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/renarichxx_cfg.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/rprintf.cpp
 )
