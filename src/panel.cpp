@@ -9,6 +9,10 @@
 #include"builtin/nwrprintf.h"
 #include"builtin/wcwidth.h"
 
+#ifdef max
+#undef max
+#endif
+
 template<class _CharT>
 std::vector<std::basic_string<_CharT>> rena::basic_panel<_CharT>::content() const noexcept {
     return this -> _vs_content;

@@ -17,7 +17,7 @@ int main(){
     wp.subtitle( L"副标题" );
     wp.push_line( L"第一行" );
     wp.push_line( L"[cyan]第二行" );
-    wp.push_line( L"[italic,underline,overline,magenta]第三行：相对复杂的测试" );
+    wp.push_line( L"[magenta,bcyan]第三行：相对复杂的测试" );
     std::wcout << wp << std::endl;
 
     return 0;

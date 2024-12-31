@@ -84,20 +84,20 @@ namespace rena {
             static constexpr unsigned int s_frame_heavy_single_line = 0x0800;
             static constexpr unsigned int s_default = s_title | s_subtitle | s_frame_single_line;
 
-            std::vector<std::basic_string<_CharT>> content() const noexcept;
-            void content( const std::vector<std::basic_string<_CharT>>& __c_vs_content );
-            void push_line( const std::basic_string<_CharT>& __c_s_line );
-            void insert_line( const std::basic_string<_CharT>& __c_s_line , std::size_t __ull_pos );
-            void pop_line();
-            void erase_line( std::size_t __ull_pos );
-            std::basic_string<_CharT> title() const noexcept;
-            void title( const std::basic_string<_CharT>& __c_s_title );
-            std::basic_string<_CharT> subtitle() const noexcept;
-            void subtitle( const std::basic_string<_CharT>& __c_s_subtitle );
-            color_code frame_color() const noexcept;
-            void frame_color( const color_code& __c_cc_code );
-            unsigned int style() const noexcept;
-            void style( unsigned int __ui_style );
+            __RENALIBS_API__ std::vector<std::basic_string<_CharT>> content() const noexcept;
+            __RENALIBS_API__ void content( const std::vector<std::basic_string<_CharT>>& __c_vs_content );
+            __RENALIBS_API__ void push_line( const std::basic_string<_CharT>& __c_s_line );
+            __RENALIBS_API__ void insert_line( const std::basic_string<_CharT>& __c_s_line , std::size_t __ull_pos );
+            __RENALIBS_API__ void pop_line();
+            __RENALIBS_API__ void erase_line( std::size_t __ull_pos );
+            __RENALIBS_API__ std::basic_string<_CharT> title() const noexcept;
+            __RENALIBS_API__ void title( const std::basic_string<_CharT>& __c_s_title );
+            __RENALIBS_API__ std::basic_string<_CharT> subtitle() const noexcept;
+            __RENALIBS_API__ void subtitle( const std::basic_string<_CharT>& __c_s_subtitle );
+            __RENALIBS_API__ color_code frame_color() const noexcept;
+            __RENALIBS_API__ void frame_color( const color_code& __c_cc_code );
+            __RENALIBS_API__ unsigned int style() const noexcept;
+            __RENALIBS_API__ void style( unsigned int __ui_style );
 
         protected:
             virtual void _render( std::basic_ostream<_CharT>& __os ) const override;
@@ -117,10 +117,10 @@ namespace rena {
     class panel final : public basic_panel<char> {
 
         public:
-            panel() : basic_panel<char>() {}
-            panel( const std::string& __c_s_line )
+            __RENALIBS_API__ panel() : basic_panel<char>() {}
+            __RENALIBS_API__ panel( const std::string& __c_s_line )
                 : basic_panel<char>( __c_s_line ) {}
-            panel( const std::vector<std::string>& __c_vs_content )
+            __RENALIBS_API__ panel( const std::vector<std::string>& __c_vs_content )
                 : basic_panel<char>( __c_vs_content ) {}
 
         protected:
@@ -134,10 +134,10 @@ namespace rena {
     class wpanel final : public basic_panel<wchar_t> {
 
         public:
-            wpanel() : basic_panel<wchar_t>() {}
-            wpanel( const std::wstring& __c_ws_line )
+            __RENALIBS_API__ wpanel() : basic_panel<wchar_t>() {}
+            __RENALIBS_API__ wpanel( const std::wstring& __c_ws_line )
                 : basic_panel<wchar_t>( __c_ws_line ) {}
-            wpanel( const std::vector<std::wstring>& __c_vws_content )
+            __RENALIBS_API__ wpanel( const std::vector<std::wstring>& __c_vws_content )
                 : basic_panel<wchar_t>( __c_vws_content ) {}
 
         protected:
