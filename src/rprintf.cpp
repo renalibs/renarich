@@ -1,9 +1,7 @@
 #include"rena/renarichxx.h"
 
-#include<codecvt>
 #include<cstdarg>
 #include<iostream>
-#include<locale>
 #include<regex>
 #include<sstream>
 #include<stack>
@@ -11,8 +9,8 @@
 
 #include"builtin/color_tag.h"
 
-int _rprintf( const std::string& __c_s_str , std::ostream& __os );
-int _wrprintf( const std::wstring& __c_ws_str , std::wostream & __wos );
+template<class _CharT>
+int _rprintf( const std::basic_string<_CharT>& __c_s_str , std::basic_ostream<_CharT>& __os );
 
 int rena::rprintf( const char* __cp_c_format , ... ){
     va_list args;
@@ -33,39 +31,69 @@ int rena::wrprintf( const wchar_t* __cp_wc_format , ... ){
     std::wstring fullwstr( buf );
     delete[] buf;
     va_end( args );
-    return _wrprintf( fullwstr , std::wcout );
+    return _rprintf( fullwstr , std::wcout );
 }
 
-int _rprintf( const std::string& __c_s_str , std::ostream& __os ){
-    std::regex rbranket( R"(\[(.*?)\])" );
-    std::sregex_iterator rit( __c_s_str.begin() , __c_s_str.end() , rbranket );
-    std::sregex_iterator rend;
+template<class _CharT>
+int _rprintf( const std::basic_string<_CharT>& __c_s_str , std::basic_ostream<_CharT>& __os ){
+    using _string = std::basic_string<_CharT>;
+    using _string_const_iterator = typename _string::const_iterator;
+
+    constexpr bool is_wchar_mode = ( std::is_same_v<_CharT,wchar_t> );
+
+    std::basic_regex<_CharT> rbranket;
+    if constexpr ( is_wchar_mode )
+    {
+        rbranket = std::basic_regex<_CharT>( LR"(\[(.*?)\])" );
+    }
+    else
+    {
+        rbranket = std::basic_regex<_CharT>( R"(\[(.*?)\])" );
+    }
+
+    std::regex_iterator<_string_const_iterator> rit( __c_s_str.begin() , __c_s_str.end() , rbranket );
+    std::regex_iterator<_string_const_iterator> rend;
 
     std::size_t lpos = 0;
     std::stack<rena::color_code> code_stack;
     while ( rit != rend )
     {
-        std::smatch match = *rit;
+        std::match_results<_string_const_iterator> match = *rit;
         std::size_t bpos = match.position();
         std::size_t epos = bpos + match.length();
         if ( bpos == 0 || ( bpos > 0 && __c_s_str[bpos-1] != '\\' ) )
         {
-            std::string tag_str = match[1].str();
-            std::stringstream ss( tag_str );
-            std::vector<std::string> tags;
-            std::string this_tag;
-            while ( std::getline( ss , this_tag , ',' ) )
+            _string tag_str = match[1].str();
+            std::basic_stringstream<_CharT> ss( tag_str );
+            std::vector<rena::color_code> codes;
+            _string this_tag;
+            if constexpr ( is_wchar_mode )
             {
-                if ( !rena::builtin::is_legal_color_tag( this_tag ) )
+                while ( std::getline( ss , this_tag , L',' ) )
                 {
-                    goto next_iterator;
-                } // illegal color tag, break
-                tags.push_back( this_tag );
-            }
-            __os << __c_s_str.substr( lpos , bpos - lpos );
-            for ( const auto& tag : tags )
+                    rena::color_code this_code = rena::builtin::parse_color_tag( this_tag );
+                    if ( this_code == rena::builtin::IllegalColorTag )
+                    {
+                        goto next_iterator;
+                    }
+                    codes.push_back( this_code );
+                }
+            } // wchar
+            else
             {
-                rena::color_code code = rena::builtin::parse_color_tag( tag );
+                while ( std::getline( ss , this_tag , ',' ) )
+                {
+                    rena::color_code this_code = rena::builtin::parse_color_tag( this_tag );
+                    if ( this_code == rena::builtin::IllegalColorTag )
+                    {
+                        goto next_iterator;
+                    }
+                    codes.push_back( this_code );
+                }
+            } // char
+            __os << __c_s_str.substr( lpos , bpos - lpos );
+            for ( const auto& code : codes )
+            {
                 if ( code == rena::builtin::PopColorTag )
                 {
                     __os << rena::rich_reset;
@@ -89,15 +117,12 @@ int _rprintf( const std::string& __c_s_str , std::ostream& __os ){
                         code_stack.pop();
                     } // pop all codes
                 } // pop all tag
-                else if ( code != rena::builtin::IllegalColorTag )
+                else
                 {
                     __os << code;
                     code_stack.push( code );
                 } // color tag
-                else
-                {
-                    goto next_iterator;
-                } // illegal tag, should never approach here
+                // illegal color tag should never approach here
                 lpos = epos;
             }
         }
@@ -112,79 +137,5 @@ next_iterator:
     return 0;
 }
 
-int _wrprintf( const std::wstring& __c_ws_str , std::wostream& __wos ){
-    std::wregex rbranket( LR"(\[(.*?)\])" );
-    std::wsregex_iterator rit( __c_ws_str.begin() , __c_ws_str.end() , rbranket );
-    std::wsregex_iterator rend;
-
-    std::size_t lpos = 0;
-    std::stack<rena::color_code> code_stack;
-    while ( rit != rend )
-    {
-        std::wsmatch match = *rit;
-        std::size_t bpos = match.position();
-        std::size_t epos = bpos + match.length();
-        if ( bpos == 0 || ( bpos > 0 && __c_ws_str[bpos-1] != '\\' ) )
-        {
-            std::wstring tag_wstr = match[1].str();
-            std::wstring wtempstr;
-            std::wstringstream wss( tag_wstr );
-            std::vector<std::string> tags;
-            while ( std::getline( wss , wtempstr , L',' ) )
-            {
-                std::string this_tag = std::wstring_convert<std::codecvt_utf8<wchar_t>>().to_bytes( wtempstr );
-                if ( !rena::builtin::is_legal_color_tag( this_tag ) )
-                {
-                    goto next_iterator;
-                } // illegal color tag, break
-                tags.push_back( this_tag );
-            }
-            __wos << __c_ws_str.substr( lpos , bpos - lpos );
-            for ( const auto& tag : tags )
-            {
-                rena::color_code code = rena::builtin::parse_color_tag( tag );
-                if ( code == rena::builtin::PopColorTag )
-                {
-                    __wos << rena::rich_reset;
-                    if ( !code_stack.empty() )
-                    {
-                        code_stack.pop();
-                        std::stack<rena::color_code> temp_stack( code_stack );
-                        while ( !code_stack.empty() )
-                        {
-                            __wos << code_stack.top();
-                            code_stack.pop();
-                        }
-                        code_stack = temp_stack;
-                    } // code stack not empty, revert remaining color codes
-                } // pop tag
-                else if ( code == rena::builtin::PopAllColorTag )
-                {
-                    __wos << rena::rich_reset;
-                    while ( !code_stack.empty() )
-                    {
-                        code_stack.pop();
-                    } // pop all codes
-                } // pop all tag
-                else if ( code != rena::builtin::IllegalColorTag )
-                {
-                    __wos << code;
-                    code_stack.push( code );
-                } // color tag
-                else
-                {
-                    goto next_iterator;
-                } // illegal tag, should never approach here
-                lpos = epos;
-            }
-        }
-next_iterator:
-        ++rit;
-    }
-    if ( lpos < __c_ws_str.size() )
-    {
-        __wos << __c_ws_str.substr( lpos );
-    } // print remaining chars
-    __wos << rena::rich_reset << std::flush;
-    return 0;
-}
+template int _rprintf<char>( const std::string& __c_s_str , std::ostream& __os );
+template int _rprintf<wchar_t>( const std::wstring& __c_s_str , std::wostream& __os );
