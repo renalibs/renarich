@@ -1,6 +1,7 @@
 #include"color_tag.h"
 
 #include<algorithm>
+#include<cwctype>
 #include<unordered_map>
 
 template<class _CharT>
@@ -117,7 +118,7 @@ rena::color_code rena::builtin::parse_color_tag( const std::basic_string<_CharT>
     _string tag = __c_s_tag;
     constexpr bool is_wchar_mode = ( std::is_same_v<_CharT,wchar_t> );
 
-    std::transform( tag.begin() , tag.end() , tag.begin() , []( _CharT __c ) -> _CharT {
+    std::transform( tag.begin() , tag.end() , tag.begin() , [is_wchar_mode]( _CharT __c ) -> _CharT {
         return ( is_wchar_mode ) ? std::towlower( __c ) : std::tolower( __c );
     } );
     // tolower
