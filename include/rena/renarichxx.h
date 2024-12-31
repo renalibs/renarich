@@ -26,10 +26,13 @@ namespace rena {
         public:
             RENARICH_DECLARE_STATIC_CLASS( renarichxx_cfg );
 
+            __RENALIBS_API__ static bool force_utf8_codecvt();
+            __RENALIBS_API__ static void force_utf8_codecvt( bool __b_enable );
             __RENALIBS_API__ static bool use_cjk_char_spacing();
             __RENALIBS_API__ static void use_cjk_char_spacing( bool __b_enable );
 
         private:
+            static bool _b_force_utf8_codecvt;
             static bool _b_use_cjk_char_spacing;
 
     }; // class renarichxx_cfg

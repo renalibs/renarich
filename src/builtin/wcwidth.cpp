@@ -75,6 +75,7 @@
 #include<locale>
 #include<wchar.h>
 
+#include"builtin/nwstrcvt.h"
 #include"rena/renarichxx.h"
 
 #ifdef __cplusplus
@@ -333,7 +334,8 @@ int mk_wcswidth_cjk(const wchar_t *pwcs, size_t n)
 #endif // __cplusplus
 
 int rena::builtin::wcwidth( wchar_t __wc_c ){
-    return renarichxx_cfg::use_cjk_char_spacing() ? mk_wcwidth_cjk( __wc_c ) : mk_wcwidth( __wc_c );
+    return renarichxx_cfg::use_cjk_char_spacing() ? mk_wcwidth_cjk( __wc_c )
+                                                  : mk_wcwidth( __wc_c );
 }
 
 int rena::builtin::wcswidth( const wchar_t* __cp_wc_ws , std::size_t __ull_n ){
@@ -342,7 +344,7 @@ int rena::builtin::wcswidth( const wchar_t* __cp_wc_ws , std::size_t __ull_n ){
 }
 
 int rena::builtin::swidth( const std::string& __c_s_str ){
-    return wswidth( std::wstring_convert<std::codecvt_utf8<wchar_t>>().from_bytes( __c_s_str ) );
+    return wswidth( nwstrcvt_to_wstr( __c_s_str , true ) );
 }
 
 int rena::builtin::wswidth( const std::wstring& __c_ws_str ){
