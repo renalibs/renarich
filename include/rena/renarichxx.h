@@ -16,6 +16,8 @@
 #endif // _MSC_VER
 
 #include<ostream>
+#include<string>
+#include<vector>
 
 #include"rena/renarich.h"
 
@@ -52,6 +54,7 @@ namespace rena {
 
         protected:
             virtual void _render( std::basic_ostream<_CharT>& __os ) const = 0;
+            static std::basic_string<_CharT> _get_content_without_color_tag( const std::basic_string<_CharT>& __c_s_str );
 
     }; // class basic_rcc: basic rich CLI control
 
@@ -66,37 +69,48 @@ namespace rena {
 
         public:
             basic_panel() : basic_rcc<_CharT>() {}
-            basic_panel( const std::basic_string<_CharT>& __c_s_content )
-                : basic_rcc<_CharT>() , _s_content( __c_s_content ) {}
+            basic_panel( const std::basic_string<_CharT>& __c_s_line )
+                : basic_rcc<_CharT>() , _vs_content( { __c_s_line } ) {}
+            basic_panel( const std::vector<std::basic_string<_CharT>>& __c_vs_content )
+                : basic_rcc<_CharT>() , _vs_content( __c_vs_content ) {}
 
-            static constexpr int s_title = 0x0001;
-            static constexpr int s_no_title = 0x0002;
-            static constexpr int s_subtitle = 0x0010;
-            static constexpr int s_no_subtitle = 0x0020;
-            static constexpr int s_frame_single_line = 0x0100;
-            static constexpr int s_frame_double_line = 0x0200;
-            static constexpr int s_frame_rounded = 0x0400;
-            static constexpr int s_frame_heavy_single_line = 0x0800;
-            static constexpr int s_default = s_title | s_subtitle | s_frame_single_line;
+            static constexpr unsigned int s_title = 0x0001;
+            static constexpr unsigned int s_no_title = 0x0002;
+            static constexpr unsigned int s_subtitle = 0x0010;
+            static constexpr unsigned int s_no_subtitle = 0x0020;
+            static constexpr unsigned int s_frame_single_line = 0x0100;
+            static constexpr unsigned int s_frame_double_line = 0x0200;
+            static constexpr unsigned int s_frame_rounded = 0x0400;
+            static constexpr unsigned int s_frame_heavy_single_line = 0x0800;
+            static constexpr unsigned int s_default = s_title | s_subtitle | s_frame_single_line;
 
-            std::basic_string<_CharT> content() const noexcept;
-            void content( const std::basic_string<_CharT>& __c_s_content );
+            std::vector<std::basic_string<_CharT>> content() const noexcept;
+            void content( const std::vector<std::basic_string<_CharT>>& __c_vs_content );
+            void push_line( const std::basic_string<_CharT>& __c_s_line );
+            void insert_line( const std::basic_string<_CharT>& __c_s_line , std::size_t __ull_pos );
+            void pop_line();
+            void erase_line( std::size_t __ull_pos );
+            std::basic_string<_CharT> title() const noexcept;
+            void title( const std::basic_string<_CharT>& __c_s_title );
+            std::basic_string<_CharT> subtitle() const noexcept;
+            void subtitle( const std::basic_string<_CharT>& __c_s_subtitle );
             color_code frame_color() const noexcept;
             void frame_color( const color_code& __c_cc_code );
-            int style() const noexcept;
-            void style( int __i_style );
+            unsigned int style() const noexcept;
+            void style( unsigned int __ui_style );
 
         protected:
             virtual void _render( std::basic_ostream<_CharT>& __os ) const override;
-            virtual int _get_content_width() const = 0;
             virtual int _get_content_width( const std::basic_string<_CharT>& __c_s_content ) const = 0;
 
             virtual _CharT _get_space_char() const noexcept = 0;
             virtual const std::basic_string<_CharT>& _get_frame_char( int __i_c ) const = 0;
 
-            std::basic_string<_CharT> _s_content;
+            std::vector<std::basic_string<_CharT>> _vs_content;
+            std::basic_string<_CharT> _s_title;
+            std::basic_string<_CharT> _s_subtitle;
             color_code _cc_frame_color = fcolor::WHITE;
-            int _i_style = s_default;
+            unsigned int _ui_style = s_default;
 
     }; // class basic_panel
 
@@ -104,17 +118,35 @@ namespace rena {
 
         public:
             panel() : basic_panel<char>() {}
-            panel( const std::string& __c_s_content )
-                : basic_panel<char>( __c_s_content ) {};
+            panel( const std::string& __c_s_line )
+                : basic_panel<char>( __c_s_line ) {}
+            panel( const std::vector<std::string>& __c_vs_content )
+                : basic_panel<char>( __c_vs_content ) {}
 
         protected:
-            int _get_content_width() const override;
             int _get_content_width( const std::string& __c_s_content ) const override;
 
             char _get_space_char() const noexcept override;
             const std::string& _get_frame_char( int __i_c ) const override;
 
     }; // class panel
+
+    class wpanel final : public basic_panel<wchar_t> {
+
+        public:
+            wpanel() : basic_panel<wchar_t>() {}
+            wpanel( const std::wstring& __c_ws_line )
+                : basic_panel<wchar_t>( __c_ws_line ) {}
+            wpanel( const std::vector<std::wstring>& __c_vws_content )
+                : basic_panel<wchar_t>( __c_vws_content ) {}
+
+        protected:
+            int _get_content_width( const std::wstring& __c_s_content ) const override;
+
+            wchar_t _get_space_char() const noexcept override;
+            const std::wstring& _get_frame_char( int __i_c ) const override;
+
+    }; // class wpanel
 
 } // namespace rena
 

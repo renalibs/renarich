@@ -19,6 +19,17 @@ if(NOT ${RENARICH_HEADER_ONLY})
         renarich
     )
 
+    add_executable(panel_usage
+        ${CMAKE_CURRENT_SOURCE_DIR}/panel_usage.cpp
+    )
+    target_include_directories(panel_usage
+        PUBLIC
+            ${RENARICH_INCLUDE_DIR}
+    )
+    target_link_libraries(panel_usage
+        renarich
+    )
+
     if(WIN32)
         add_executable(wrprintf_usage
             ${CMAKE_CURRENT_SOURCE_DIR}/wrprintf_usage.cpp
@@ -34,8 +45,22 @@ if(NOT ${RENARICH_HEADER_ONLY})
         target_link_libraries(wrprintf_usage
             renarich
         )
-        # `wrprintf_usage` is an example only for windows
-        # for other platforms you should always use `rprintf` instead of `wrprintf`
+
+        add_executable(wpanel_usage
+            ${CMAKE_CURRENT_SOURCE_DIR}/wpanel_usage.cpp
+        )
+        target_include_directories(wpanel_usage
+            PUBLIC
+                ${RENARICH_INCLUDE_DIR}
+        )
+        target_compile_options(wpanel_usage
+            PRIVATE
+                $<$<CXX_COMPILER_ID:MSVC>:/utf-8>
+        )
+        target_link_libraries(wpanel_usage
+            renarich
+        )
     endif()
+    # these wide modules' examples are only for windows
 
 endif()
