@@ -6,8 +6,8 @@
  * If something is wrong, please fix it in `src/tools/templates/update_box_chars/box_chars.h.in` first
  */
 
-#ifndef __RENARICH_BUILTIN_BOX_CHARS_H__
-#define __RENARICH_BUILTIN_BOX_CHARS_H__
+#ifndef __RENALIBS_RENARICH_BUILTIN_BOX_CHARS_H__
+#define __RENALIBS_RENARICH_BUILTIN_BOX_CHARS_H__
 
 #include<string>
 
@@ -33,4 +33,4 @@ namespace rena::builtin {
 
 } // namespace rena::builtin
 
-#endif // __RENARICH_BUILTIN_BOX_CHARS_H__
+#endif // __RENALIBS_RENARICH_BUILTIN_BOX_CHARS_H__
