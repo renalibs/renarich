@@ -15,8 +15,8 @@ int rena::rprintf( const char* __cp_c_format , ... ){
     int len = vsnprintf( nullptr , 0 , __cp_c_format , args_copy );
     va_end( args_copy );
 
-    char* buf = new char[len];
-    vsnprintf( buf , len , __cp_c_format , args );
+    char* buf = new char[len+1];
+    vsnprintf( buf , len + 1 , __cp_c_format , args );
     std::string fullstr( buf );
     delete[] buf;
     va_end( args );
@@ -32,8 +32,8 @@ int rena::wrprintf( const wchar_t* __cp_wc_format , ... ){
     int len = vswprintf( nullptr , 0 , __cp_wc_format , args_copy );
     va_end( args_copy );
 
-    wchar_t* buf = new wchar_t[len];
-    vswprintf( buf , len , __cp_wc_format , args );
+    wchar_t* buf = new wchar_t[len+1];
+    vswprintf( buf , len + 1 , __cp_wc_format , args );
     std::wstring fullwstr( buf );
     delete[] buf;
     va_end( args );
