@@ -15,8 +15,14 @@ int _rprintf( const std::basic_string<_CharT>& __c_s_str , std::basic_ostream<_C
 int rena::rprintf( const char* __cp_c_format , ... ){
     va_list args;
     va_start( args , __cp_c_format );
-    char* buf = new char[65536];
-    vsnprintf( buf , 65536 , __cp_c_format , args );
+
+    va_list args_copy;
+    va_copy( args_copy , args );
+    int len = vsnprintf( nullptr , 0 , __cp_c_format , args_copy );
+    va_end( args_copy );
+
+    char* buf = new char[len];
+    vsnprintf( buf , len , __cp_c_format , args );
     std::string fullstr( buf );
     delete[] buf;
     va_end( args );
@@ -26,8 +32,14 @@ int rena::rprintf( const char* __cp_c_format , ... ){
 int rena::wrprintf( const wchar_t* __cp_wc_format , ... ){
     va_list args;
     va_start( args , __cp_wc_format );
-    wchar_t* buf = new wchar_t[65536];
-    vswprintf( buf , 65536 , __cp_wc_format , args );
+
+    va_list args_copy;
+    va_copy( args_copy , args );
+    int len = vswprintf( nullptr , 0 , __cp_wc_format , args_copy );
+    va_end( args_copy );
+
+    wchar_t* buf = new wchar_t[len];
+    vswprintf( buf , len , __cp_wc_format , args );
     std::wstring fullwstr( buf );
     delete[] buf;
     va_end( args );
