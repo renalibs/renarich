@@ -4,6 +4,7 @@
 #include<windows.h>
 #else // _WIN32
 #include<codecvt>
+#include<locale>
 #endif // _WIN32
 
 std::wstring rena::builtin::nwstrcvt_to_wstr( const std::string& __c_s_str , bool __b_force_utf8 ){
