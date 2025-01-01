@@ -71,8 +71,6 @@
 
 #include"wcwidth.h"
 
-#include<codecvt>
-#include<locale>
 #include<wchar.h>
 
 #include"builtin/nwstrcvt.h"
@@ -344,7 +342,7 @@ int rena::builtin::wcswidth( const wchar_t* __cp_wc_ws , std::size_t __ull_n ){
 }
 
 int rena::builtin::swidth( const std::string& __c_s_str ){
-    return wswidth( nwstrcvt_to_wstr( __c_s_str , true ) );
+    return wswidth( nwstrcvt_to_wstr( __c_s_str , renarichxx_cfg::force_utf8_codecvt() ) );
 }
 
 int rena::builtin::wswidth( const std::wstring& __c_ws_str ){
