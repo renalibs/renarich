@@ -1,6 +1,6 @@
-#include"terminal_helper.h"
+#include"console_helper.h"
 
-rena::builtin::coord rena::builtin::get_terminal_size(){
+rena::builtin::coord rena::builtin::get_console_size(){
     coord size = {};
 #ifdef _WIN32
     CONSOLE_SCREEN_BUFFER_INFO csbufinfo;
@@ -11,8 +11,8 @@ rena::builtin::coord rena::builtin::get_terminal_size(){
     }
     else
     {
-        size._i_x = DEFAULT_TERMINAL_SIZE_WIDTH;
-        size._i_y = DEFAULT_TERMINAL_SIZE_HEIGHT;
+        size._i_x = DEFAULT_CONSOLE_SIZE_WIDTH;
+        size._i_y = DEFAULT_CONSOLE_SIZE_HEIGHT;
     }
 #else // _WIN32
     struct winsize ws;
@@ -23,8 +23,8 @@ rena::builtin::coord rena::builtin::get_terminal_size(){
     }
     else
     {
-        size._i_x = DEFAULT_TERMINAL_SIZE_WIDTH;
-        size._i_y = DEFAULT_TERMINAL_SIZE_HEIGHT;
+        size._i_x = DEFAULT_CONSOLE_SIZE_WIDTH;
+        size._i_y = DEFAULT_CONSOLE_SIZE_HEIGHT;
     }
 #endif // _WIN32
     return size;
