@@ -158,7 +158,7 @@ namespace rena {
             friend std::basic_ostream<_Elem,_Traits>& operator<<( std::basic_ostream<_Elem,_Traits>& __os , const basic_rstring<_Elem>& __c__rstr );
 
         protected:
-            virtual void _render( std::basic_ostream<_CharT>& __os ) const override;
+            __RENALIBS_API__ virtual void _render( std::basic_ostream<_CharT>& __os ) const override;
 
     }; // class basic_rstring
 
