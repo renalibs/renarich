@@ -9,6 +9,7 @@ add_library(renarich SHARED
     ${CMAKE_CURRENT_SOURCE_DIR}/panel.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/renarichxx_cfg.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/rprintf.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/rstring.cpp
 )
 target_include_directories(renarich
     PUBLIC

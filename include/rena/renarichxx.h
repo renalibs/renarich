@@ -148,6 +148,28 @@ namespace rena {
 
     }; // class wpanel
 
+    template<class _CharT>
+    class basic_rstring : public std::basic_string<_CharT> , public basic_rcc<_CharT> {
+
+        public:
+            using std::basic_string<_CharT>::basic_string;
+
+            template<class _Elem , class _Traits>
+            friend std::basic_ostream<_Elem,_Traits>& operator<<( std::basic_ostream<_Elem,_Traits>& __os , const basic_rstring<_Elem>& __c__rstr );
+
+        protected:
+            virtual void _render( std::basic_ostream<_CharT>& __os ) const override;
+
+    }; // class basic_rstring
+
+    template<class _Elem , class _Traits>
+    inline std::basic_ostream<_Elem,_Traits>& operator<<( std::basic_ostream<_Elem,_Traits>& __os , const basic_rstring<_Elem>& __c__rstr ){
+        return operator<<( __os , static_cast<const basic_rcc<_Elem>&>( __c__rstr ) );
+    }
+
+    typedef basic_rstring<char> rstring;
+    typedef basic_rstring<wchar_t> wrstring;
+
 } // namespace rena
 
 #endif // __RENALIBS_RENARICHXX_H__
