@@ -55,6 +55,7 @@ namespace rena {
         protected:
             virtual void _render( std::basic_ostream<_CharT>& __os ) const = 0;
             static std::basic_string<_CharT> _get_content_without_color_tag( const std::basic_string<_CharT>& __c_s_str );
+            static std::vector<std::basic_string<_CharT>> _spilt_line_to_lines( const std::basic_string<_CharT>& __c_s_str , int __i_diff = 0 );
 
     }; // class basic_rcc: basic rich CLI control
 

@@ -46,6 +46,9 @@ namespace rena::exceptions {
 
     RENARICH_ADD_NEW_EXCEPTION( renarich_illegal_value );
     RENARICH_ADD_NEW_EXCEPTION( renarich_unexpected );
+#ifdef RENARICH_USE_ICU
+    RENARICH_ADD_NEW_EXCEPTION( renarich_icu_error );
+#endif // RENARICH_USE_ICU
 
 } // namespace rena::exceptions
 
