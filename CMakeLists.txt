@@ -3,6 +3,7 @@ project(renarich VERSION 0.0.1 LANGUAGES CXX)
 
 option(RENARICH_BUILD_EXAMPLE "Build renarich examples." OFF)
 option(RENARICH_HEADER_ONLY "Use renarich as a header-only library. Only basic functions in `rena/renarich.h` will be available." OFF)
+option(RENARICH_USE_ICU "Use ICU4C library" ON)
 
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
