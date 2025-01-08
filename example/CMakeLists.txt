@@ -30,6 +30,17 @@ if(NOT ${RENARICH_HEADER_ONLY})
         renarich
     )
 
+    add_executable(rstring_usage
+        ${CMAKE_CURRENT_SOURCE_DIR}/rstring_usage.cpp
+    )
+    target_include_directories(rstring_usage
+        PUBLIC
+            ${RENARICH_INCLUDE_DIR}
+    )
+    target_link_libraries(rstring_usage
+        renarich
+    )
+
     if(WIN32)
         add_executable(wrprintf_usage
             ${CMAKE_CURRENT_SOURCE_DIR}/wrprintf_usage.cpp

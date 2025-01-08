@@ -4,7 +4,20 @@
 
 template<class _CharT>
 void rena::basic_rstring<_CharT>::_render( std::basic_ostream<_CharT>& __os ) const {
-    builtin::nwrprintf( *this , __os );
+    auto lines = this -> _spilt_line_to_lines( *this );
+    bool first_line = true;
+    for ( const auto& it : lines )
+    {
+        if ( !first_line )
+        {
+            __os << std::endl;
+        }
+        else
+        {
+            first_line = false;
+        }
+        builtin::nwrprintf( it , __os );
+    }
     return;
 }
 
