@@ -8,7 +8,7 @@
 #include"rena/renarich.h"
 
 template<class _CharT>
-int rena::builtin::nwrprintf( const std::basic_string<_CharT>& __c_s_str , std::basic_ostream<_CharT>& __os ){
+int rena::builtin::nwrprintf( const std::basic_string<_CharT>& __c_s_str , std::basic_ostream<_CharT>& __os , bool __b_style_reset ){
     using _string = std::basic_string<_CharT>;
     using _string_const_iterator = typename _string::const_iterator;
 
@@ -29,7 +29,10 @@ int rena::builtin::nwrprintf( const std::basic_string<_CharT>& __c_s_str , std::
 
     std::size_t lpos = 0;
     std::stack<color_code> code_stack;
-    __os << rich_reset;
+    if ( __b_style_reset )
+    {
+        __os << rich_reset;
+    }
     while ( rit != rend )
     {
         std::match_results<_string_const_iterator> match = *rit;
@@ -107,9 +110,13 @@ next_iterator:
     {
         __os << __c_s_str.substr( lpos );
     } // print remaining chars
-    __os << rich_reset << std::flush;
+    if ( __b_style_reset )
+    {
+        __os << rich_reset;
+    }
+    __os << std::flush;
     return 0;
 }
 
-template int rena::builtin::nwrprintf<char>( const std::string& , std::ostream& );
-template int rena::builtin::nwrprintf<wchar_t>( const std::wstring& , std::wostream& );
+template int rena::builtin::nwrprintf<char>( const std::string& , std::ostream& , bool );
+template int rena::builtin::nwrprintf<wchar_t>( const std::wstring& , std::wostream& , bool );

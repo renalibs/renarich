@@ -16,7 +16,7 @@ void rena::basic_rstring<_CharT>::_render( std::basic_ostream<_CharT>& __os ) co
         {
             first_line = false;
         }
-        builtin::nwrprintf( it , __os );
+        builtin::nwrprintf( it , __os , false );
     }
     return;
 }
