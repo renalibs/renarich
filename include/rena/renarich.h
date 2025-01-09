@@ -5,7 +5,9 @@
 #define RENARICH_USE_ANSI
 #endif // _WIN32
 
+#include<memory>
 #include<ostream>
+#include<stack>
 #ifndef RENARICH_USE_ANSI
 #include<windows.h>
 #endif // RENARICH_USE_ANSI
@@ -119,6 +121,68 @@ namespace rena {
 
 #endif // RENARICH_USE_ANSI
 
+        class ccstack {
+
+            public:
+                ccstack(){}
+                ~ccstack(){}
+
+                inline void push( const color_code& __c_cc_code ){
+                    if ( this -> _b_enable )
+                    {
+                        this -> _scc_cs.push( __c_cc_code );
+                    }
+                    return;
+                }
+
+                inline void pop(){
+                    if ( this -> _b_enable )
+                    {
+                        this -> _scc_cs.pop();
+                    }
+                    return;
+                }
+
+                void clear(){
+                    if ( this -> _b_enable )
+                    {
+                        while ( !( this -> _scc_cs.empty() ) )
+                        {
+                            this -> _scc_cs.pop();
+                        }   
+                    }
+                    return;
+                }
+
+                inline bool enable() const noexcept {
+                    return this -> _b_enable;
+                }
+
+                inline void enable( bool __b_enable ){
+                    this -> _b_enable = __b_enable;
+                    return;
+                }
+
+                inline std::stack<color_code> copy() const {
+                    return _scc_cs;
+                }
+
+                static inline std::shared_ptr<ccstack> global(){
+                    if ( !_p_ccs_gstack )
+                    {
+                        _p_ccs_gstack = std::make_shared<ccstack>();
+                    }
+                    return _p_ccs_gstack;
+                }
+
+            private:
+                std::stack<color_code> _scc_cs; // code stack
+                bool _b_enable = true;
+
+                static inline std::shared_ptr<ccstack> _p_ccs_gstack = nullptr; // global color code stack
+
+        }; // class ccstack
+
     } // namespace builtin
 
     class fcolor {
@@ -199,16 +263,50 @@ namespace rena {
             default: break;
         }
 #endif // RENARICH_USE_ANSI
+        builtin::ccstack::global() -> push( __c_cc_code );
         return __os;
     }
 
+    typedef struct _s_rich_pop {
+        unsigned int _ui_num;
+    } _s_rich_pop;
+    
+    inline _s_rich_pop rich_pop( unsigned int __ui_num = 1 ){
+        return { __ui_num };
+    }
+
     template<class _Elem , class _Traits>
-    std::basic_ostream<_Elem,_Traits>& rich_reset( std::basic_ostream<_Elem,_Traits>& __os  ){
+    std::basic_ostream<_Elem,_Traits>& operator<<( std::basic_ostream<_Elem,_Traits>& __os , _s_rich_pop __elem ){
 #ifdef RENARICH_USE_ANSI
         __os << "\033[0m" << std::flush;
 #else // RENARICH_USE_ANSI
         builtin::win32_cs_helper::reset_color();
 #endif // RENARICH_USE_ANSI
+        for ( unsigned int i = 0 ; i < __elem._ui_num ; i++ )
+        {
+            builtin::ccstack::global() -> pop();
+        }
+        auto code_stack = builtin::ccstack::global() -> copy();
+        builtin::ccstack::global() -> enable( false );
+        // disable global ccstack before reverting older color codes
+        // otherwise older color codes will be pushed into stack again
+        while ( !code_stack.empty() )
+        {
+            __os << code_stack.top();
+            code_stack.pop();
+        }
+        builtin::ccstack::global() -> enable( true );
+        return __os;
+    }
+
+    template<class _Elem , class _Traits>
+    std::basic_ostream<_Elem,_Traits>& rich_reset( std::basic_ostream<_Elem,_Traits>& __os ){
+#ifdef RENARICH_USE_ANSI
+        __os << "\033[0m" << std::flush;
+#else // RENARICH_USE_ANSI
+        builtin::win32_cs_helper::reset_color();
+#endif // RENARICH_USE_ANSI
+        builtin::ccstack::global() -> clear();
         return __os;
     }
 

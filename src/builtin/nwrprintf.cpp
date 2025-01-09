@@ -2,7 +2,6 @@
 
 #include<regex>
 #include<sstream>
-#include<stack>
 
 #include"builtin/color_tag.h"
 #include"rena/renarich.h"
@@ -28,7 +27,6 @@ int rena::builtin::nwrprintf( const std::basic_string<_CharT>& __c_s_str , std::
     std::regex_iterator<_string_const_iterator> rend;
 
     std::size_t lpos = 0;
-    std::stack<color_code> code_stack;
     if ( __b_style_reset )
     {
         __os << rich_reset;
@@ -73,31 +71,15 @@ int rena::builtin::nwrprintf( const std::basic_string<_CharT>& __c_s_str , std::
             {
                 if ( code == PopColorTag )
                 {
-                    __os << rich_reset;
-                    if ( !code_stack.empty() )
-                    {
-                        code_stack.pop();
-                        std::stack<color_code> temp_stack( code_stack );
-                        while ( !code_stack.empty() )
-                        {
-                            __os << code_stack.top();
-                            code_stack.pop();
-                        }
-                        code_stack = temp_stack;
-                    } // code stack not empty, revert remaining color codes
+                    __os << rich_pop();
                 } // pop tag
                 else if ( code == PopAllColorTag )
                 {
                     __os << rich_reset;
-                    while ( !code_stack.empty() )
-                    {
-                        code_stack.pop();
-                    } // pop all codes
                 } // pop all tag
                 else
                 {
                     __os << code;
-                    code_stack.push( code );
                 } // color tag
                 // illegal color tag should never approach here
             }
